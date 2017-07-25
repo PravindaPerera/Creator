@@ -146,6 +146,55 @@
 
         <!-- Main content -->
         <section class="content">
+
+            <div>
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#db" aria-controls="db" role="tab" data-toggle="tab">Database</a></li>
+                    <li role="presentation"><a href="#services" aria-controls="services" role="tab" data-toggle="tab">Services</a></li>
+                    <li role="presentation"><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab">Frontend</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="db">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Database Related Specifications</h3>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+
+                                        <div class="form-group col-md-12">
+                                            <label>Number of Databases:</label>
+                                            <input type="number" class="form-control" style="width: 200px" name ="numOfDBs">
+                                        </div>
+
+                                        <div class="form-group col-md-6 pull-left">
+                                            <label>Name of the Database:</label>
+                                            <input type="text" class="form-control" style="width: 200px" name ="nameOfDB">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>Type of the Database:</label>
+                                            <input type="text" class="form-control" style="width: 200px" name ="typeOfDB">
+                                        </div>
+
+                                    </div><!-- /.box-body -->
+                                </div><!-- /.box -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="services"></div>
+                    <div role="tabpanel" class="tab-pane fade" id="frontend"></div>
+                </div>
+
+            </div>
+
         </section>
         <!-- /.content -->
     </div>
