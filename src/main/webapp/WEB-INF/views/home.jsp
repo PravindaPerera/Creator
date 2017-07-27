@@ -170,17 +170,11 @@
 
                                         <div class="form-group col-md-12">
                                             <label>Number of Databases:</label>
-                                            <input type="number" class="form-control" style="width: 200px" name ="numOfDBs">
+                                            <input type="number" id="numOfDBs" class="form-control" style="width: 200px" onchange="addDbDetails()" name ="numOfDBs">
                                         </div>
 
-                                        <div class="form-group col-md-6 pull-left">
-                                            <label>Name of the Database:</label>
-                                            <input type="text" class="form-control" style="width: 200px" name ="nameOfDB">
-                                        </div>
+                                        <div id = "DbDetails">
 
-                                        <div class="form-group col-md-6">
-                                            <label>Type of the Database:</label>
-                                            <input type="text" class="form-control" style="width: 200px" name ="typeOfDB">
                                         </div>
 
                                     </div><!-- /.box-body -->
@@ -212,6 +206,33 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+
+<script>
+  function addDbDetails() {
+    document.getElementById("DbDetails").innerHTML = "";
+    var x = document.getElementById("numOfDBs").value;
+    var html;
+    var template = '<div class="form-group col-md-6 pull-left">';
+    template += '<label>Name of the Database:</label>';
+    template += '<input type="text" class="form-control" style="width: 200px" name ="nameOfDB">';
+    template += '</div>';
+
+    template += '<div class="form-group col-md-6">';
+    template +=  '<label>Type of the Database:</label>';
+    template += '<input type="text" class="form-control" style="width: 200px" name ="typeOfDB">';
+    template +=  '</div>';
+
+    var html = template;
+
+    while (x != 1) {
+      console.log(x);
+      html += template;
+      x --;
+    }
+
+    $('#DbDetails').html(html);
+  }
+</script>
 
 <!-- jQuery 3 -->
 <script src="/styles/bower_components/jquery/dist/jquery.min.js"></script>
