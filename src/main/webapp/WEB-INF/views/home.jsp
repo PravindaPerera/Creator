@@ -15,14 +15,12 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 
-
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="/styles/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/styles/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="/styles/bower_components/Ionicons/css/ionicons.min.css">
-
 
 
     <!-- Theme style -->
@@ -151,42 +149,93 @@
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#db" aria-controls="db" role="tab" data-toggle="tab">Database</a></li>
-                    <li role="presentation"><a href="#services" aria-controls="services" role="tab" data-toggle="tab">Services</a></li>
-                    <li role="presentation"><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab">Frontend</a></li>
+                    <li role="presentation" class="active"><a href="#db" aria-controls="db" role="tab"
+                                                              data-toggle="tab">Database</a></li>
+                    <li role="presentation"><a href="#services" aria-controls="services" role="tab" data-toggle="tab">Services</a>
+                    </li>
+                    <li role="presentation"><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab">Frontend</a>
+                    </li>
                 </ul>
 
                 <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="db">
+                <form role="form" action="/process" method="POST">
+                    <div class="tab-content">
 
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="box">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Database Related Specifications</h3>
-                                    </div><!-- /.box-header -->
-                                    <div class="box-body">
+                        <div role="tabpanel" class="tab-pane fade in active" id="db">
 
-                                        <div class="form-group col-md-12">
-                                            <label>Number of Databases:</label>
-                                            <input type="number" id="numOfDBs" class="form-control" style="width: 200px" onchange="addDbDetails()" name ="numOfDBs">
-                                        </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Database Related Specifications</h3>
+                                        </div><!-- /.box-header -->
+                                        <div class="box-body">
 
-                                        <div id = "DbDetails">
+                                            <div class="form-group col-md-12">
+                                                <label>Number of Databases:</label>
+                                                <input type="number" id="numOfDBs" class="form-control"
+                                                       style="width: 200px" onchange="addDbDetails()" name="numOfDBs">
+                                            </div>
 
-                                        </div>
+                                            <div id="DbDetails">
 
-                                    </div><!-- /.box-body -->
-                                </div><!-- /.box -->
+                                            </div>
+
+                                        </div><!-- /.box-body -->
+                                    </div><!-- /.box -->
+                                </div>
                             </div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="services">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Database Related Specifications</h3>
+                                        </div><!-- /.box-header -->
+                                        <div class="box-body">
+
+                                            <div class="form-group col-md-12">
+                                                <label>Number of services:</label>
+                                                <input type="text" id="serviceName" class="form-control"
+                                                       style="width: 200px" name="serviceName">
+                                            </div>
+
+                                        </div><!-- /.box-body -->
+                                    </div><!-- /.box -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="frontend">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Database Related Specifications</h3>
+                                        </div><!-- /.box-header -->
+                                        <div class="box-body">
+
+                                            <div class="form-group col-md-12">
+                                                <label>Number of services:</label>
+                                                <input type="text" id="frontendName" class="form-control"
+                                                       style="width: 200px" name="frontendName">
+                                            </div>
+
+                                        </div><!-- /.box-body -->
+                                    </div><!-- /.box -->
+                                </div>
+                            </div>
+
+                            <input type="submit" name="submit" id="submit" value="Place Order"
+                                   class="btn btn-info pull-right">
                         </div>
 
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="services"></div>
-                    <div role="tabpanel" class="tab-pane fade" id="frontend"></div>
-                </div>
-
+                </form>
             </div>
 
         </section>
@@ -197,7 +246,8 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright &copy; 2017-onwards <a href="https://www.linkedin.com/in/pravinda/">Pravinda Perera</a>.</strong> All rights
+        <strong>Copyright &copy; 2017-onwards <a href="https://www.linkedin.com/in/pravinda/">Pravinda
+            Perera</a>.</strong> All rights
         reserved.
     </footer>
 
@@ -219,25 +269,25 @@
     html += '</div>';
 
     html += '<div class="form-group col-md-6">';
-    html +=  '<label>Type of the Database:</label>';
+    html += '<label>Type of the Database:</label>';
     html += '<input type="text" class="form-control" style="width: 200px" name ="typeOfDB1">';
-    html +=  '</div>';
+    html += '</div>';
 
     while (x != 1) {
 
       var template = '<div class="form-group col-md-6 pull-left">';
       template += '<label>Name of the Database:</label>';
-      template += '<input type="text" class="form-control" style="width: 200px" name ="nameOfDB'+count+'">';
+      template += '<input type="text" class="form-control" style="width: 200px" name ="nameOfDB' + count + '">';
       template += '</div>';
 
       template += '<div class="form-group col-md-6">';
-      template +=  '<label>Type of the Database:</label>';
-      template += '<input type="text" class="form-control" style="width: 200px" name ="typeOfDB'+count+'">';
-      template +=  '</div>';
+      template += '<label>Type of the Database:</label>';
+      template += '<input type="text" class="form-control" style="width: 200px" name ="typeOfDB' + count + '">';
+      template += '</div>';
 
       html += template;
-      count ++;
-      x --;
+      count++;
+      x--;
     }
 
     $('#DbDetails').html(html);
