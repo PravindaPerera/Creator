@@ -211,22 +211,32 @@
   function addDbDetails() {
     document.getElementById("DbDetails").innerHTML = "";
     var x = document.getElementById("numOfDBs").value;
-    var html;
-    var template = '<div class="form-group col-md-6 pull-left">';
-    template += '<label>Name of the Database:</label>';
-    template += '<input type="text" class="form-control" style="width: 200px" name ="nameOfDB">';
-    template += '</div>';
+    var count = 2;
 
-    template += '<div class="form-group col-md-6">';
-    template +=  '<label>Type of the Database:</label>';
-    template += '<input type="text" class="form-control" style="width: 200px" name ="typeOfDB">';
-    template +=  '</div>';
+    var html = '<div class="form-group col-md-6 pull-left">';
+    html += '<label>Name of the Database:</label>';
+    html += '<input type="text" class="form-control" style="width: 200px" name ="nameOfDB1">';
+    html += '</div>';
 
-    var html = template;
+    html += '<div class="form-group col-md-6">';
+    html +=  '<label>Type of the Database:</label>';
+    html += '<input type="text" class="form-control" style="width: 200px" name ="typeOfDB1">';
+    html +=  '</div>';
 
     while (x != 1) {
-      console.log(x);
+
+      var template = '<div class="form-group col-md-6 pull-left">';
+      template += '<label>Name of the Database:</label>';
+      template += '<input type="text" class="form-control" style="width: 200px" name ="nameOfDB'+count+'">';
+      template += '</div>';
+
+      template += '<div class="form-group col-md-6">';
+      template +=  '<label>Type of the Database:</label>';
+      template += '<input type="text" class="form-control" style="width: 200px" name ="typeOfDB'+count+'">';
+      template +=  '</div>';
+
       html += template;
+      count ++;
       x --;
     }
 
