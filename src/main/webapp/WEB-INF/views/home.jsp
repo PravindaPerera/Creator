@@ -14,7 +14,6 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="/styles/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -151,7 +150,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#db" aria-controls="db" role="tab"
                                                               data-toggle="tab">Database</a></li>
-                    <li role="presentation"><a href="#services" aria-controls="services" role="tab" data-toggle="tab">Services</a>
+                    <li role="presentation"><a href="#application" aria-controls="application" role="tab" data-toggle="tab">Application</a>
                     </li>
                     <li role="presentation"><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab">Frontend</a>
                     </li>
@@ -187,20 +186,59 @@
                             </div>
 
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="services">
+                        <div role="tabpanel" class="tab-pane fade" id="application">
 
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="box">
                                         <div class="box-header">
-                                            <h3 class="box-title">Database Related Specifications</h3>
+                                            <h3 class="box-title">Application Related Specifications</h3>
                                         </div><!-- /.box-header -->
                                         <div class="box-body">
 
-                                            <div class="form-group col-md-12">
-                                                <label>Number of services:</label>
-                                                <input type="text" id="serviceName" class="form-control"
-                                                       style="width: 200px" name="serviceName">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">Application Overview</div>
+                                                <div class="panel-body">
+
+                                                    <div class="col-md-6">
+                                                        <label>Application Name:</label>
+                                                        <input type="text" id="appName" class="form-control"
+                                                               style="width: 200px" name="appName">
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-6">
+                                                        <label>Application Domain:</label>
+                                                        <input type="text" id="appDomain" class="form-control"
+                                                               style="width: 200px" name="appDomain">
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">Use case overview
+                                                    <button type="button" class="btn btn-info btn-lg pull-right"
+                                                            style="border-radius: 15px; width: 30px; height: 30px; line-height: 1.428571429;
+                                                                text-align: center; padding: 6px 0; font-size: 12px">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="panel-body">
+
+                                                    <div class="col-md-6">
+                                                        <label>Use case Name:</label>
+                                                        <input type="text" id="useCaseName" class="form-control"
+                                                               style="width: 200px" name="appName">
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-6">
+                                                        <label><input type="checkbox" name="appDomain1" value="appDomain1">Independent</label>
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                </div>
+
                                             </div>
 
                                         </div><!-- /.box-body -->
