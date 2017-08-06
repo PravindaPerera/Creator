@@ -215,14 +215,37 @@
                                 <div class="col-xs-12">
                                     <div class="box">
                                         <div class="box-header">
-                                            <h3 class="box-title">Database Related Specifications</h3>
+                                            <h3 class="box-title">Frontend Related Specifications</h3>
                                         </div><!-- /.box-header -->
                                         <div class="box-body">
 
-                                            <div class="form-group col-md-12">
-                                                <label>Number of services:</label>
-                                                <input type="text" id="frontendName" class="form-control"
-                                                       style="width: 200px" name="frontendName">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">Desktop</div>
+                                                <div class="panel-body">
+
+                                                    <div class="col-md-6">
+                                                        <label><input type="radio" name="desktop" value="Web Application">Web Application</label>
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-6">
+                                                        <label><input type="radio" name="desktop" value="Standalone Application">Standalone Application</label>
+                                                    </div><!-- /.col-lg-6 -->
+                                                </div>
+                                            </div>
+
+
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">Mobile</div>
+                                                <div class="panel-body">
+
+                                                    <div class="col-md-6">
+                                                        <label><input type="radio" name="mobile" value="Web Application">Web Application</label>
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-6">
+                                                        <label><input type="radio" name="mobile" value="Native Mobile Application">Native Mobile Application</label>
+                                                    </div><!-- /.col-lg-6 -->
+                                                </div>
                                             </div>
 
                                         </div><!-- /.box-body -->
