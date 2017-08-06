@@ -16,13 +16,16 @@ public class FrontendService {
     }
 
     // processing the user specified type of applications frontend
-    public Frontend processFrontendDetails(String desktopApp, String mobileApp) {
+    public Frontend processFrontendDetails(String desktopApp, String mobileApp, String login) {
         switch (desktopApp) {
             case "Web Application":
                 frontend.setDesktopWebApp(true);
                 break;
             case "Standalone Application":
                 frontend.setDesktopStandaloneApp(true);
+                break;
+            default:
+                break;
         }
 
         switch (mobileApp) {
@@ -31,6 +34,20 @@ public class FrontendService {
                 break;
             case "Native Mobile Application":
                 frontend.setMobileNativeApp(true);
+                break;
+            default:
+                break;
+        }
+
+        switch (login) {
+            case "Private Login Facility":
+                frontend.setPrivateLogin(true);
+                break;
+            case "Social Media Application Login Facility":
+                frontend.setSocialMediaAppLogin(true);
+                break;
+            default:
+                break;
         }
         return frontend;
     }

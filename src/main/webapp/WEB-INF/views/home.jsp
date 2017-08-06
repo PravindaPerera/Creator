@@ -223,12 +223,16 @@
                                                 <div class="panel-heading">Desktop</div>
                                                 <div class="panel-body">
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <label><input type="radio" name="desktop" value="Web Application">Web Application</label>
                                                     </div><!-- /.col-lg-6 -->
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <label><input type="radio" name="desktop" value="Standalone Application">Standalone Application</label>
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-4">
+                                                        <label><input type="radio" name="desktop" value="N/A" checked>N/A</label>
                                                     </div><!-- /.col-lg-6 -->
                                                 </div>
                                             </div>
@@ -238,12 +242,34 @@
                                                 <div class="panel-heading">Mobile</div>
                                                 <div class="panel-body">
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <label><input type="radio" name="mobile" value="Web Application">Web Application</label>
                                                     </div><!-- /.col-lg-6 -->
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <label><input type="radio" name="mobile" value="Native Mobile Application">Native Mobile Application</label>
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-4">
+                                                        <label><input type="radio" name="mobile" value="N/A" checked>N/A</label>
+                                                    </div><!-- /.col-lg-6 -->
+                                                </div>
+                                            </div>
+
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">Login</div>
+                                                <div class="panel-body">
+
+                                                    <div class="col-md-4">
+                                                        <label><input type="radio" name="login" value="Private Login Facility">Private Login Facility</label>
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-4">
+                                                        <label><input type="radio" name="login" value="Social Media Application Login Facility">Social Media Application Login Facility</label>
+                                                    </div><!-- /.col-lg-6 -->
+
+                                                    <div class="col-md-4">
+                                                        <label><input type="radio" name="login" value="N/A" checked>N/A</label>
                                                     </div><!-- /.col-lg-6 -->
                                                 </div>
                                             </div>

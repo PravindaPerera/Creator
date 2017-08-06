@@ -10,12 +10,16 @@ public class Frontend {
     private boolean desktopStandaloneApp;
     private boolean mobileWebApp;
     private boolean mobileNativeApp;
+    private boolean privateLogin;
+    private boolean socialMediaAppLogin;
 
     public Frontend () {
         this.desktopWebApp = false;
         this.desktopStandaloneApp = false;
         this.mobileWebApp = false;
         this.mobileNativeApp = false;
+        this.privateLogin = false;
+        this.socialMediaAppLogin = false;
     }
 
     public boolean isDesktopWebApp() {
@@ -48,5 +52,21 @@ public class Frontend {
 
     public void setMobileNativeApp(boolean mobileNativeApp) {
         this.mobileNativeApp = mobileNativeApp;
+    }
+
+    public boolean isPrivateLogin() {
+        return privateLogin;
+    }
+
+    public void setPrivateLogin(boolean privateLogin) {
+        this.privateLogin = privateLogin;
+    }
+
+    public boolean isSocialMediaAppLogin() {
+        return socialMediaAppLogin;
+    }
+
+    public void setSocialMediaAppLogin(boolean socialMediaAppLogin) {
+        this.socialMediaAppLogin = socialMediaAppLogin;
     }
 }

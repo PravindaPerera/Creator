@@ -38,12 +38,15 @@ public class processController {
         }
 
         //process Frontend info
-        frontend = frontendService.processFrontendDetails(params.get("desktop"), params.get("mobile"));
+        frontend = frontendService.processFrontendDetails(params.get("desktop"),
+                params.get("mobile"), params.get("login"));
 
         System.out.println(frontend.isDesktopWebApp());
         System.out.println(frontend.isDesktopStandaloneApp());
         System.out.println(frontend.isMobileWebApp());
         System.out.println(frontend.isMobileNativeApp());
+        System.out.println(frontend.isPrivateLogin());
+        System.out.println(frontend.isSocialMediaAppLogin());
 
         return "result";
     }
