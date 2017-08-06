@@ -2,7 +2,9 @@ package com.creator.controllers.processor;
 
 import com.creator.models.Database;
 import com.creator.models.Frontend;
+import com.creator.services.FrontendService;
 import com.sun.org.apache.regexp.internal.RE;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,11 +17,15 @@ import java.util.Map;
  */
 @Controller
 public class processController {
+    @Autowired
+    private FrontendService frontendService;
+
+    private Frontend frontend;
+
     @RequestMapping(value = "/process", method = RequestMethod.POST)
     public String showHomePage(@RequestParam Map<String, String> params) {
         int numOfDBs;
         Database dbDetails = new Database();
-        Frontend frontend = new Frontend();
 
         //process Db info
         numOfDBs = Integer.parseInt(params.get("numOfDBs"));
@@ -32,21 +38,12 @@ public class processController {
         }
 
         //process Frontend info
-        switch (params.get("desktop")) {
-            case "Web Application":
-                frontend.setDesktopWebApp(true);
-                break;
-            case "Standalone Application":
-                frontend.setDesktopStandaloneApp(true);
-        }
+        frontend = frontendService.processFrontendDetails(params.get("desktop"), params.get("mobile"));
 
-        switch (params.get("mobile")) {
-            case "Web Application":
-                frontend.setMobileWebApp(true);
-                break;
-            case "Native Mobile Application":
-                frontend.setMobileNativeApp(true);
-        }
+        System.out.println(frontend.isDesktopWebApp());
+        System.out.println(frontend.isDesktopStandaloneApp());
+        System.out.println(frontend.isMobileWebApp());
+        System.out.println(frontend.isMobileNativeApp());
 
         return "result";
     }
