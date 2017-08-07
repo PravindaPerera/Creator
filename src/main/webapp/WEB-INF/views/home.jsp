@@ -219,7 +219,7 @@
 
                                             <div class="panel panel-primary">
                                                 <div class="panel-heading">Use case overview
-                                                    <button type="button" class="btn btn-info btn-lg pull-right"
+                                                    <button type="button" class="btn btn-info btn-lg pull-right" onclick="addUseCaseDetails()"
                                                             style="border-radius: 15px; width: 30px; height: 30px; line-height: 1.428571429;
                                                                 text-align: center; padding: 6px 0; font-size: 12px">
                                                         <i class="glyphicon glyphicon-plus"></i>
@@ -227,15 +227,19 @@
                                                 </div>
                                                 <div class="panel-body">
 
-                                                    <div class="col-md-6">
-                                                        <label>Use case Name:</label>
-                                                        <input type="text" id="useCaseName" class="form-control"
-                                                               style="width: 200px" name="appName">
-                                                    </div><!-- /.col-lg-6 -->
+                                                    <div class="row">
+                                                        <div class="col-md-6 pull-left">
+                                                            <label>Use case Name:</label>
+                                                            <input type="text" id="useCaseName1" class="form-control"
+                                                                   style="width: 200px" name="useCaseName1">
+                                                        </div><!-- /.col-lg-6 -->
 
-                                                    <div class="col-md-6">
-                                                        <label><input type="checkbox" name="appDomain1" value="appDomain1">Independent</label>
-                                                    </div><!-- /.col-lg-6 -->
+                                                        <div class="col-md-6">
+                                                            <label><input type="checkbox" name="useCaseInd1" value="useCaseInd1">Independent</label>
+                                                        </div><!-- /.col-lg-6 -->
+                                                    </div>
+
+                                                    <div id="AdditionalUseCaseDetails"></div>
 
                                                 </div>
 
@@ -379,6 +383,25 @@
 
     $('#DbDetails').html(html);
   }
+</script>
+
+<script>
+    var useCaseCount = 2;
+    function addUseCaseDetails() {
+      var html = '<div class="row">';
+      html += '<div class="col-md-6 pull-left">';
+      html += '<label>Use case Name:</label>';
+      html += '<input type="text" id="useCaseName' + useCaseCount +'" class="form-control" style="width: 200px" name="useCaseName' + useCaseCount +'">';
+      html += '</div>';
+
+      html += '<div class="col-md-6">';
+      html += '<label><input type="checkbox" name="useCaseInd' + useCaseCount +'" value="useCaseInd' + useCaseCount +'">Independent</label>';
+      html += '</div>';
+      html += '</div>';
+
+      useCaseCount++;
+      $('#AdditionalUseCaseDetails').append(html);
+    }
 </script>
 
 <!-- jQuery 3 -->
