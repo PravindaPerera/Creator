@@ -117,7 +117,7 @@
                 </li>
 
                 <li>
-                    <a href="pages/widgets.html">
+                    <a>
                         <i class="fa fa-th"></i> <span>Architecture</span>
                     </a>
                 </li>

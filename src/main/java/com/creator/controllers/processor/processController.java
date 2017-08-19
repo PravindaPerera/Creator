@@ -23,7 +23,7 @@ public class processController {
     private Frontend frontend;
 
     @RequestMapping(value = "/process", method = RequestMethod.POST)
-    public String showHomePage(@RequestParam Map<String, String> params) {
+    public String process(@RequestParam Map<String, String> params) {
         int numOfDBs;
         Database dbDetails = new Database();
 
