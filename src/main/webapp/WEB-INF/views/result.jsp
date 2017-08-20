@@ -30,6 +30,8 @@
 
     <script src="/styles/dist/js/fabric.js"></script>
 
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -112,12 +114,6 @@
 
                 <li class="header">MAIN NAVIGATION</li>
 
-                <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>Workspace</span>
-                    </a>
-                </li>
-
                 <li class="active treeview">
                     <a href="result.jsp">
                         <i class="fa fa-th"></i> <span>Architecture</span>
@@ -142,77 +138,96 @@
         <!-- Main content -->
         <section class="content">
 
-            <div>
-                <canvas id="canvas" width="800" height="450" style="border:1px solid #000000"></canvas>
-                <script>
-                  var canvas = new fabric.Canvas('canvas');
+            <c:if test="${!frontend.privateLogin && !frontend.socialMediaAppLogin}">
 
-                  fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
-//                  canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
-//
-//                  canvas.selectionColor = 'rgba(0,255,0,0.3)';
-//                  canvas.selectionBorderColor = 'red';
-//                  canvas.selectionLineWidth = 5;
+                <c:if test="${database.numOfDBs > 0}">
 
-                  var line = makeLine([ 250, 125, 250, 175 ]),
-                    line2 = makeLine([ 250, 175, 250, 250 ]),
-                    line3 = makeLine([ 250, 250, 300, 350]),
-                    line4 = makeLine([ 250, 250, 200, 350]),
-                    line5 = makeLine([ 250, 175, 175, 225 ]),
-                    line6 = makeLine([ 250, 175, 325, 225 ]);
+                    <div class="col-md-6">
+                        <canvas id="canvas" width="1200" height="450" style="border:1px solid #000000"></canvas>
+                        <script>
+                          var canvas = new fabric.Canvas('canvas');
 
-                  canvas.add(line, line2, line3, line4, line5, line6);
+                          fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
-                  canvas.add(
-                    makeCircle(line.get('x1'), line.get('y1'), null, line),
-                    makeCircle(line.get('x2'), line.get('y2'), line, line2, line5, line6),
-                    makeCircle(line2.get('x2'), line2.get('y2'), line2, line3, line4),
-                    makeCircle(line3.get('x2'), line3.get('y2'), line3),
-                    makeCircle(line4.get('x2'), line4.get('y2'), line4),
-                    makeCircle(line5.get('x2'), line5.get('y2'), line5),
-                    makeCircle(line6.get('x2'), line6.get('y2'), line6)
-                  );
+                          var line1 = makeLine([ 100, 250, 400, 250 ]),
+                            line2 = makeLine([ 400, 250, 700, 250 ]);
+                            line3 = makeLine([700, 250, 1000, 250]);
 
-                  canvas.on('object:moving', function(e) {
-                    var p = e.target;
-                    p.line1 && p.line1.set({ 'x2': p.left, 'y2': p.top });
-                    p.line2 && p.line2.set({ 'x1': p.left, 'y1': p.top });
-                    p.line3 && p.line3.set({ 'x1': p.left, 'y1': p.top });
-                    p.line4 && p.line4.set({ 'x1': p.left, 'y1': p.top });
-                    canvas.renderAll();
-                  });
+                          canvas.add(line1, line2, line3);
 
-                  function makeLine(coords) {
-                    return new fabric.Line(coords, {
-                      fill: 'red',
-                      stroke: 'red',
-                      strokeWidth: 5,
-                      selectable: false
-                    });
-                  }
+                          var db1 = getCircle();
+                          var db1Text = getText("Database");
 
-                  function makeCircle(left, top, line1, line2, line3, line4) {
-                    var c = new fabric.Circle({
-                      left: left,
-                      top: top,
-                      strokeWidth: 5,
-                      radius: 12,
-                      fill: '#fff',
-                      stroke: '#666'
-                    });
-                    c.hasControls = c.hasBorders = false;
+                          var ms = getCircle();
+                          var msText = getText("Microservice");
 
-                    c.line1 = line1;
-                    c.line2 = line2;
-                    c.line3 = line3;
-                    c.line4 = line4;
+                          var bff = getCircle();
+                          var bffText = getText("BFF");
 
-                    return c;
-                  }
+                          var fe = getCircle();
+                          var feText = getText("FE");
 
-                </script>
+                          var group1 = new fabric.Group([ db1, db1Text ], {
+                            left: 100,
+                            top: 250
+                          });
 
-            </div>
+                          var group2 = new fabric.Group([ ms, msText ], {
+                            left: 400,
+                            top: 250
+                          });
+
+                          var group3 = new fabric.Group([ bff, bffText ], {
+                            left: 700,
+                            top: 250
+                          });
+
+                          var group4 = new fabric.Group([ fe, feText ], {
+                            left: 1000,
+                            top: 250
+                          });
+
+                          canvas.add(group1, group2, group3, group4);
+
+                          function makeLine(coords) {
+                            return new fabric.Line(coords, {
+                              fill: 'red',
+                              stroke: 'red',
+                              strokeWidth: 5,
+                              selectable: false
+                            });
+                          }
+
+                          function getCircle() {
+                            var circle = new fabric.Circle({
+                              radius: 50,
+                              fill: '#fff',
+                              strokeWidth: 5,
+                              stroke: '#666',
+                              originX: 'center',
+                              originY: 'center'
+                            });
+                            circle.hasControls = circle.hasBorders = false;
+                            return circle;
+                          }
+
+                          function getText(title) {
+                            var text = new fabric.Text(title, {
+                              fontSize: 10,
+                              originX: 'center',
+                              originY: 'center'
+                            });
+
+                            return text;
+                          }
+
+                        </script>
+
+                    </div>
+
+                </c:if>
+
+            </c:if>
 
         </section>
         <!-- /.content -->

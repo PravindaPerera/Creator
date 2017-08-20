@@ -116,12 +116,6 @@
                     </a>
                 </li>
 
-                <li>
-                    <a>
-                        <i class="fa fa-th"></i> <span>Architecture</span>
-                    </a>
-                </li>
-
             </ul>
         </section>
         <!-- /.sidebar -->
