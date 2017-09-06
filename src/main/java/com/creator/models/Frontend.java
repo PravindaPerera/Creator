@@ -12,6 +12,7 @@ public class Frontend {
     private boolean mobileNativeApp;
     private boolean privateLogin;
     private boolean socialMediaAppLogin;
+    private int numOfApps;
 
     public Frontend () {
         this.desktopWebApp = false;
@@ -20,6 +21,7 @@ public class Frontend {
         this.mobileNativeApp = false;
         this.privateLogin = false;
         this.socialMediaAppLogin = false;
+        this.numOfApps = 0;
     }
 
     public boolean isDesktopWebApp() {
@@ -68,5 +70,13 @@ public class Frontend {
 
     public void setSocialMediaAppLogin(boolean socialMediaAppLogin) {
         this.socialMediaAppLogin = socialMediaAppLogin;
+    }
+
+    public int getNumOfApps() {
+        return numOfApps;
+    }
+
+    public void setNumOfApps(int numOfApps) {
+        this.numOfApps = numOfApps;
     }
 }

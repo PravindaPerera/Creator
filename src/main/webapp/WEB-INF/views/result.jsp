@@ -140,20 +140,42 @@
 
             <c:if test="${!frontend.privateLogin && !frontend.socialMediaAppLogin}">
 
-                <c:if test="${database.numOfDBs > 0}">
+                <c:if test="${database.numOfDBs > 0 && frontend.numOfApps > 0}">
 
                     <div class="col-md-6">
-                        <canvas id="canvas" width="1200" height="450" style="border:1px solid #000000"></canvas>
+                        <canvas id="canvas" width="1200" height="1000" style="border:1px solid #000000"></canvas>
                         <script>
                           var canvas = new fabric.Canvas('canvas');
+                          var lines = [];
+                          var centerLineY = 250;
+                          var parallalLineHeight = 150;
+                          var parallalLineUpperCount = 0;
+                          var parallalLineLowerCount = 0;
 
                           fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
-                          var line1 = makeLine([ 100, 250, 400, 250 ]),
-                            line2 = makeLine([ 400, 250, 700, 250 ]);
-                            line3 = makeLine([700, 250, 1000, 250]);
+                          // Center - line elements created
+                          lines.push(getLine([ 100, centerLineY, 400, centerLineY]));
+                          lines.push(getLine([ 400, centerLineY, 700, centerLineY]));
+                          lines.push(getLine([700, centerLineY, 1000, centerLineY]));
 
-                          canvas.add(line1, line2, line3);
+                          for (var i=0; i <${database.numOfDBs-1}; i++) {
+                            if ((i+1)%2 !== 0) {
+                              parallalLineUpperCount++;
+                              lines.push(getLine([100, centerLineY-(parallalLineUpperCount*parallalLineHeight), 400, centerLineY-(parallalLineUpperCount*parallalLineHeight)]));
+                              lines.push(getLine([400, centerLineY-(parallalLineUpperCount*parallalLineHeight), 700, centerLineY]));
+                            }
+                            else {
+                              parallalLineLowerCount++;
+                              lines.push(getLine([100, centerLineY+(parallalLineLowerCount*parallalLineHeight), 400, centerLineY+(parallalLineLowerCount*parallalLineHeight)]));
+                              lines.push(getLine([400, centerLineY+(parallalLineUpperCount*parallalLineHeight), 700, centerLineY]));
+                            }
+
+                          }
+
+                          for (var i=0; i<lines.length; i++){
+                            canvas.add(lines[i]);
+                          }
 
                           var db1 = getCircle();
                           var db1Text = getText("Database");
@@ -189,7 +211,7 @@
 
                           canvas.add(group1, group2, group3, group4);
 
-                          function makeLine(coords) {
+                          function getLine(coords) {
                             return new fabric.Line(coords, {
                               fill: 'red',
                               stroke: 'red',

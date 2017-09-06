@@ -46,7 +46,7 @@ public class processController {
 //        System.out.println(frontend.isDesktopStandaloneApp());
 //        System.out.println(frontend.isMobileWebApp());
 //        System.out.println(frontend.isMobileNativeApp());
-        System.out.println(frontend.isPrivateLogin());
+//        System.out.println(frontend.isPrivateLogin());
 //        System.out.println(frontend.isSocialMediaAppLogin());
 
         model.addAttribute("frontend", frontend);

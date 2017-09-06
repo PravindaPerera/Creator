@@ -20,9 +20,11 @@ public class FrontendService {
         switch (desktopApp) {
             case "Web Application":
                 frontend.setDesktopWebApp(true);
+                frontend.setNumOfApps(frontend.getNumOfApps() + 1);
                 break;
             case "Standalone Application":
                 frontend.setDesktopStandaloneApp(true);
+                frontend.setNumOfApps(frontend.getNumOfApps() + 1);
                 break;
             default:
                 break;
@@ -31,9 +33,11 @@ public class FrontendService {
         switch (mobileApp) {
             case "Web Application":
                 frontend.setMobileWebApp(true);
+                frontend.setNumOfApps(frontend.getNumOfApps() + 1);
                 break;
             case "Native Mobile Application":
                 frontend.setMobileNativeApp(true);
+                frontend.setNumOfApps(frontend.getNumOfApps() + 1);
                 break;
             default:
                 break;
