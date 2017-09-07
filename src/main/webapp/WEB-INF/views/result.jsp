@@ -147,6 +147,18 @@
                         <script>
                           var canvas = new fabric.Canvas('canvas');
                           var lines = [];
+                          var groups = [];
+
+                          var dbCircles = [];
+                          var msCircles = [];
+                          var bffcircles = [];
+                          var feCircles = [];
+
+                          var dbTexts = [];
+                          var msTexts = [];
+                          var bffTexts = [];
+                          var feTexts = [];
+
                           var centerLineY = 250;
                           var parallalLineHeight = 150;
                           var parallalLineUpperCount = 0;
@@ -154,11 +166,44 @@
 
                           fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
-                          // Center - line elements created
+                          // Center line elements created
                           lines.push(getLine([ 100, centerLineY, 400, centerLineY]));
                           lines.push(getLine([ 400, centerLineY, 700, centerLineY]));
                           lines.push(getLine([700, centerLineY, 1000, centerLineY]));
 
+                          dbCircles.push(getCircle());
+                          dbTexts.push(getText("Database-1"));
+
+                          msCircles.push(getCircle());
+                          msTexts.push(getText("Microservice-1"));
+
+                          bffcircles.push(getCircle());
+                          bffTexts.push(getText("BFF"));
+
+                          feCircles.push(getCircle());
+                          feTexts.push(getText("FE"));
+
+                          groups.push(new fabric.Group([ dbCircles[0], dbTexts[0] ], {
+                            left: 100,
+                            top: centerLineY
+                          }));
+
+                          groups.push(new fabric.Group([ msCircles[0], msTexts[0] ], {
+                            left: 400,
+                            top: centerLineY
+                          }));
+
+                          groups.push(new fabric.Group([ bffcircles[0], bffTexts[0] ], {
+                            left: 700,
+                            top: centerLineY
+                          }));
+
+                          groups.push(new fabric.Group([ feCircles[0], feTexts[0] ], {
+                            left: 1000,
+                            top: centerLineY
+                          }));
+
+                          // Branch elements created
                           for (var i=0; i <${database.numOfDBs-1}; i++) {
                             if ((i+1)%2 !== 0) {
                               parallalLineUpperCount++;
@@ -177,39 +222,9 @@
                             canvas.add(lines[i]);
                           }
 
-                          var db1 = getCircle();
-                          var db1Text = getText("Database");
-
-                          var ms = getCircle();
-                          var msText = getText("Microservice");
-
-                          var bff = getCircle();
-                          var bffText = getText("BFF");
-
-                          var fe = getCircle();
-                          var feText = getText("FE");
-
-                          var group1 = new fabric.Group([ db1, db1Text ], {
-                            left: 100,
-                            top: 250
-                          });
-
-                          var group2 = new fabric.Group([ ms, msText ], {
-                            left: 400,
-                            top: 250
-                          });
-
-                          var group3 = new fabric.Group([ bff, bffText ], {
-                            left: 700,
-                            top: 250
-                          });
-
-                          var group4 = new fabric.Group([ fe, feText ], {
-                            left: 1000,
-                            top: 250
-                          });
-
-                          canvas.add(group1, group2, group3, group4);
+                          for (var i=0; i<groups.length; i++){
+                            canvas.add(groups[i]);
+                          }
 
                           function getLine(coords) {
                             return new fabric.Line(coords, {
