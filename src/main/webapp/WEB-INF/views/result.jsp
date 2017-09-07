@@ -30,6 +30,8 @@
 
     <script src="/styles/dist/js/fabric.js"></script>
 
+    <img src="/styles/dist/img/authServiceImg.png" id="authServiceImg" style="display: none;">
+
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 </head>
@@ -138,8 +140,6 @@
         <!-- Main content -->
         <section class="content">
 
-            <c:if test="${!frontend.privateLogin && !frontend.socialMediaAppLogin}">
-
                 <c:if test="${database.numOfDBs > 0 && frontend.numOfApps > 0}">
 
                     <div class="col-md-6">
@@ -202,6 +202,18 @@
                             left: 1000,
                             top: centerLineY
                           }));
+
+                          <c:if test="${frontend.socialMediaAppLogin}">
+                              var authLine = getLine([ 1000, 100, 1000, 250]);
+                              var authServiceImg = document.getElementById('authServiceImg');
+                              var authServiceImgInstance = new fabric.Image(authServiceImg, {
+                                left: 1000,
+                                top: 100
+                              });
+
+                              canvas.add(authLine, authServiceImgInstance);
+                          </c:if>
+
 
                           // Branch elements created
                           for (var i=0; i <${database.numOfDBs-1}; i++) {
@@ -301,8 +313,6 @@
                     </div>
 
                 </c:if>
-
-            </c:if>
 
         </section>
         <!-- /.content -->

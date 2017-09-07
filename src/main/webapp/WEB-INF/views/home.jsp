@@ -315,7 +315,7 @@
                                 </div>
                             </div>
 
-                            <input type="submit" name="submit" id="submit" value="Place Order"
+                            <input type="submit" name="submit" id="submit" value="Generate Architecture"
                                    class="btn btn-info pull-right">
                         </div>
 
