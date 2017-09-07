@@ -207,13 +207,51 @@
                           for (var i=0; i <${database.numOfDBs-1}; i++) {
                             if ((i+1)%2 !== 0) {
                               parallalLineUpperCount++;
+                              //additional db line
                               lines.push(getLine([100, centerLineY-(parallalLineUpperCount*parallalLineHeight), 400, centerLineY-(parallalLineUpperCount*parallalLineHeight)]));
+
+                              //additional db
+                              dbCircles.push(getCircle());
+                              dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
+                              groups.push(new fabric.Group([ dbCircles[dbCircles.length-1], dbTexts[dbTexts.length-1] ], {
+                                left: 100,
+                                top: centerLineY-(parallalLineUpperCount*parallalLineHeight)
+                              }));
+
+                              //additional ms line
                               lines.push(getLine([400, centerLineY-(parallalLineUpperCount*parallalLineHeight), 700, centerLineY]));
+
+                              //additional ms
+                              msCircles.push(getCircle());
+                              msTexts.push(getText("Microservice-".concat((msCircles.length).toString())));
+                              groups.push(new fabric.Group([ msCircles[msCircles.length-1], msTexts[msTexts.length-1] ], {
+                                left: 400,
+                                top: centerLineY-(parallalLineUpperCount*parallalLineHeight)
+                              }));
                             }
                             else {
                               parallalLineLowerCount++;
+                              //additional db line
                               lines.push(getLine([100, centerLineY+(parallalLineLowerCount*parallalLineHeight), 400, centerLineY+(parallalLineLowerCount*parallalLineHeight)]));
+
+                              //additional db
+                              dbCircles.push(getCircle());
+                              dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
+                              groups.push(new fabric.Group([ dbCircles[dbCircles.length-1], dbTexts[dbTexts.length-1] ], {
+                                left: 100,
+                                top: centerLineY+(parallalLineLowerCount*parallalLineHeight)
+                              }));
+
+                              //additional ms line
                               lines.push(getLine([400, centerLineY+(parallalLineUpperCount*parallalLineHeight), 700, centerLineY]));
+
+                              //additional ms
+                              msCircles.push(getCircle());
+                              msTexts.push(getText("Microservice-".concat((msCircles.length).toString())));
+                              groups.push(new fabric.Group([ msCircles[msCircles.length-1], msTexts[msTexts.length-1] ], {
+                                left: 400,
+                                top: centerLineY+(parallalLineUpperCount*parallalLineHeight)
+                              }));
                             }
 
                           }
