@@ -159,10 +159,18 @@
                           var bffTexts = [];
                           var feTexts = [];
 
+                          var modelDBNames = [];
+
                           var centerLineY = 250;
                           var parallalLineHeight = 150;
                           var parallalLineUpperCount = 0;
                           var parallalLineLowerCount = 0;
+
+                          <c:forEach items="${database.nameOfDB}" var="dbNames">
+                            modelDBNames.push('${dbNames}');
+                          </c:forEach>
+
+                          console.log(modelDBNames.length);
 
                           fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
@@ -172,7 +180,9 @@
                           lines.push(getLine([700, centerLineY, 1000, centerLineY]));
 
                           dbCircles.push(getCircle());
-                          dbTexts.push(getText("Database-1"));
+                          modelDBNames[0] !== '' ? dbTexts.push(getText(modelDBNames[0])) : dbTexts.push(getText("Database-1"));
+                          //dbTexts.push(getText("Database-1"));
+                          <%--<c:out value="${empty database.nameOfDB.get(0) ? 'var1 is empty or null' : 'var1 is NOT empty or null'}" />--%>
 
                           msCircles.push(getCircle());
                           msTexts.push(getText("Microservice-1"));
@@ -224,7 +234,7 @@
 
                               //additional db
                               dbCircles.push(getCircle());
-                              dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
+                              modelDBNames[i+1] !== '' ? dbTexts.push(getText(modelDBNames[i+1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
                               groups.push(new fabric.Group([ dbCircles[dbCircles.length-1], dbTexts[dbTexts.length-1] ], {
                                 left: 100,
                                 top: centerLineY-(parallalLineUpperCount*parallalLineHeight)
@@ -248,7 +258,7 @@
 
                               //additional db
                               dbCircles.push(getCircle());
-                              dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
+                              modelDBNames[i+1] !== '' ? dbTexts.push(getText(modelDBNames[i+1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
                               groups.push(new fabric.Group([ dbCircles[dbCircles.length-1], dbTexts[dbTexts.length-1] ], {
                                 left: 100,
                                 top: centerLineY+(parallalLineLowerCount*parallalLineHeight)

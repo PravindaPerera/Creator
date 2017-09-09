@@ -32,22 +32,14 @@ public class processController {
         numOfDBs = Integer.parseInt(params.get("numOfDBs"));
         database.setNumOfDBs(numOfDBs);
 
-        while (numOfDBs > 0) {
-            database.setNameOfDB(params.get("nameOfDB".concat(String.valueOf(numOfDBs))));
-            database.setTypeOfDB(params.get("typeOfDB".concat(String.valueOf(numOfDBs))));
-            numOfDBs --;
+        for (int i=1; i<= numOfDBs; i++) {
+            database.setNameOfDB(params.get("nameOfDB".concat(String.valueOf(i))));
+            database.setTypeOfDB(params.get("typeOfDB".concat(String.valueOf(i))));
         }
 
         //process Frontend info
         frontend = frontendService.processFrontendDetails(params.get("desktop"),
                 params.get("mobile"), params.get("login"));
-
-//        System.out.println(frontend.isDesktopWebApp());
-//        System.out.println(frontend.isDesktopStandaloneApp());
-//        System.out.println(frontend.isMobileWebApp());
-//        System.out.println(frontend.isMobileNativeApp());
-//        System.out.println(frontend.isPrivateLogin());
-//        System.out.println(frontend.isSocialMediaAppLogin());
 
         model.addAttribute("frontend", frontend);
         model.addAttribute("database", database);
