@@ -1,6 +1,6 @@
 # Creator
 A Toolkit to propose a high-level architecture based on Microservices and
-Serverless technologies for a given enterprise application...
+Serverless technologies for a given enterprise application
 
 ### Directory Structure
 
