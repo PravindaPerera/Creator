@@ -32,10 +32,8 @@ public class processController {
     public String process(ModelMap model, @RequestParam Map<String, String> params) {
 
         database = this.getDatabaseInformation(params);
+        frontend = this.getFrontendInformation(params);
 
-        //process Frontend info
-        frontend = frontendService.processFrontendDetails(params.get("desktop"),
-                params.get("mobile"), params.get("login"));
 
         model.addAttribute("frontend", frontend);
         model.addAttribute("database", database);
@@ -58,5 +56,16 @@ public class processController {
         }
 
         return databaseService.processDatabaseDetails(numOfDBs, databaseNames, databseTypes);
+    }
+
+    // get frontend information from the request params
+    private Frontend getFrontendInformation(@RequestParam Map<String, String> params) {
+
+        String desktopAppStatus = params.get("desktop");
+        String mobileAppStatus = params.get("mobile");
+        String loginStatus = params.get("login");
+
+        return frontendService.processFrontendDetails(desktopAppStatus, mobileAppStatus, loginStatus);
+
     }
 }
