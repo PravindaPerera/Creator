@@ -19,5 +19,11 @@ All domain model object files.
 Service directory files are responsible to contain all business logic 
 with respect to the application.
 
+### Installation Guide
+1. clone the repository 
+[Creator](https://github.com/PravindaPerera/Creator)
+2. set up maven in your local machine
+3. run `mvn tomcat7:run`
+
 ### Contributor
 - Pravinda Perera
