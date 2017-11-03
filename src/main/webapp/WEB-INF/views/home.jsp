@@ -144,7 +144,8 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#db" aria-controls="db" role="tab"
                                                               data-toggle="tab">Database</a></li>
-                    <li role="presentation"><a href="#application" aria-controls="application" role="tab" data-toggle="tab">Application</a>
+                    <li role="presentation"><a href="#application" aria-controls="application" role="tab"
+                                               data-toggle="tab">Application</a>
                     </li>
                     <li role="presentation"><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab">Frontend</a>
                     </li>
@@ -212,8 +213,9 @@
 
 
                                             <div class="panel panel-primary">
-                                                <div class="panel-heading">Use case overview
-                                                    <button type="button" class="btn btn-info btn-lg pull-right" onclick="addUseCaseDetails()"
+                                                <div class="panel-heading">Use Case Overview
+                                                    <button type="button" class="btn btn-info btn-lg pull-right"
+                                                            onclick="addUseCaseDetails()"
                                                             style="border-radius: 15px; width: 30px; height: 30px; line-height: 1.428571429;
                                                                 text-align: center; padding: 6px 0; font-size: 12px">
                                                         <i class="glyphicon glyphicon-plus"></i>
@@ -225,12 +227,19 @@
                                                         <div class="col-md-6 pull-left">
                                                             <label>Use case Name:</label>
                                                             <input type="text" id="useCaseName1" class="form-control"
-                                                                   style="width: 200px" name="useCaseName1">
+                                                                   style="width: 500px" name="useCaseName1">
                                                         </div><!-- /.col-lg-6 -->
 
-                                                        <div class="col-md-6">
-                                                            <label><input type="checkbox" name="useCaseInd1" value="useCaseInd1">Independent</label>
-                                                        </div><!-- /.col-lg-6 -->
+                                                        <div class="col-md-3">
+                                                            <label><input type="checkbox" name="useCaseInd1"
+                                                                          value="useCaseInd1">Independent</label>
+                                                        </div><!-- /.col-lg-3 -->
+
+                                                        <div class="col-md-3">
+                                                            <label><input type="checkbox" name="useCaseAPIs1"
+                                                                          value="useCaseAPIs1">API's Available</label>
+                                                        </div><!-- /.col-lg-3 -->
+
                                                     </div>
 
                                                     <div id="AdditionalUseCaseDetails"></div>
@@ -260,11 +269,14 @@
                                                 <div class="panel-body">
 
                                                     <div class="col-md-4">
-                                                        <label><input type="radio" name="desktop" value="Web Application">Web Application</label>
+                                                        <label><input type="radio" name="desktop"
+                                                                      value="Web Application">Web Application</label>
                                                     </div><!-- /.col-lg-6 -->
 
                                                     <div class="col-md-4">
-                                                        <label><input type="radio" name="desktop" value="Standalone Application">Standalone Application</label>
+                                                        <label><input type="radio" name="desktop"
+                                                                      value="Standalone Application">Standalone
+                                                            Application</label>
                                                     </div><!-- /.col-lg-6 -->
 
                                                     <div class="col-md-4">
@@ -279,11 +291,14 @@
                                                 <div class="panel-body">
 
                                                     <div class="col-md-4">
-                                                        <label><input type="radio" name="mobile" value="Web Application">Web Application</label>
+                                                        <label><input type="radio" name="mobile"
+                                                                      value="Web Application">Web Application</label>
                                                     </div><!-- /.col-lg-6 -->
 
                                                     <div class="col-md-4">
-                                                        <label><input type="radio" name="mobile" value="Native Mobile Application">Native Mobile Application</label>
+                                                        <label><input type="radio" name="mobile"
+                                                                      value="Native Mobile Application">Native Mobile
+                                                            Application</label>
                                                     </div><!-- /.col-lg-6 -->
 
                                                     <div class="col-md-4">
@@ -297,11 +312,15 @@
                                                 <div class="panel-body">
 
                                                     <div class="col-md-4">
-                                                        <label><input type="radio" name="login" value="Private Login Facility">Private Login Facility</label>
+                                                        <label><input type="radio" name="login"
+                                                                      value="Private Login Facility">Private Login
+                                                            Facility</label>
                                                     </div><!-- /.col-lg-6 -->
 
                                                     <div class="col-md-4">
-                                                        <label><input type="radio" name="login" value="Social Media Application Login Facility">Social Media Application Login Facility</label>
+                                                        <label><input type="radio" name="login"
+                                                                      value="Social Media Application Login Facility">Social
+                                                            Media Application Login Facility</label>
                                                     </div><!-- /.col-lg-6 -->
 
                                                     <div class="col-md-4">
@@ -380,22 +399,28 @@
 </script>
 
 <script>
-    var useCaseCount = 2;
-    function addUseCaseDetails() {
-      var html = '<div class="row">';
-      html += '<div class="col-md-6 pull-left">';
-      html += '<label>Use case Name:</label>';
-      html += '<input type="text" id="useCaseName' + useCaseCount +'" class="form-control" style="width: 200px" name="useCaseName' + useCaseCount +'">';
-      html += '</div>';
+  var useCaseCount = 2;
 
-      html += '<div class="col-md-6">';
-      html += '<label><input type="checkbox" name="useCaseInd' + useCaseCount +'" value="useCaseInd' + useCaseCount +'">Independent</label>';
-      html += '</div>';
-      html += '</div>';
+  function addUseCaseDetails() {
+    var html = '<div class="row">';
+    html += '<div class="col-md-6 pull-left">';
+    html += '<label>Use case Name:</label>';
+    html += '<input type="text" id="useCaseName' + useCaseCount + '" class="form-control" style="width: 500px" name="useCaseName' + useCaseCount + '">';
+    html += '</div>';
 
-      useCaseCount++;
-      $('#AdditionalUseCaseDetails').append(html);
-    }
+    html += '<div class="col-md-3">';
+    html += '<label><input type="checkbox" name="useCaseInd' + useCaseCount + '" value="useCaseInd' + useCaseCount + '">Independent</label>';
+    html += '</div>';
+
+    html += '<div class="col-md-3">';
+    html += '<label><input type="checkbox" name="useCaseAPIs' + useCaseCount + '" value="useCaseAPIs' + useCaseCount + '">API\'s Available</label>';
+    html += '</div>';
+
+    html += '</div>';
+
+    useCaseCount++;
+    $('#AdditionalUseCaseDetails').append(html);
+  }
 </script>
 
 <!-- jQuery 3 -->

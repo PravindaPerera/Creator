@@ -138,12 +138,14 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section>
+
+            <div>
 
                 <c:if test="${database.numOfDBs > 0 && frontend.numOfApps > 0}">
 
-                    <div class="col-md-6">
-                        <canvas id="canvas" width="1200" height="1000" style="border:1px solid #000000"></canvas>
+                    <div class="col-md-6" id="architectureDiagram">
+                        <canvas id="canvas" width="1200" height="800"></canvas>
                         <script>
                           var canvas = new fabric.Canvas('canvas');
                           var lines = [];
@@ -161,16 +163,14 @@
 
                           var modelDBNames = [];
 
-                          var centerLineY = 250;
+                          var centerLineY = document.getElementById('architectureDiagram').clientHeight / 2;
                           var parallalLineHeight = 150;
                           var parallalLineUpperCount = 0;
                           var parallalLineLowerCount = 0;
 
                           <c:forEach items="${database.nameOfDB}" var="dbNames">
-                            modelDBNames.push('${dbNames}');
+                          modelDBNames.push('${dbNames}');
                           </c:forEach>
-
-                          console.log(modelDBNames.length);
 
                           fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
@@ -214,14 +214,14 @@
                           }));
 
                           <c:if test="${frontend.socialMediaAppLogin}">
-                              var authLine = getLine([ 1000, 100, 1000, 250]);
-                              var authServiceImg = document.getElementById('authServiceImg');
-                              var authServiceImgInstance = new fabric.Image(authServiceImg, {
-                                left: 1000,
-                                top: 100
-                              });
+                          var authLine = getLine([ 1000, 100, 1000, centerLineY]);
+                          var authServiceImg = document.getElementById('authServiceImg');
+                          var authServiceImgInstance = new fabric.Image(authServiceImg, {
+                            left: 1000,
+                            top: 100
+                          });
 
-                              canvas.add(authLine, authServiceImgInstance);
+                          canvas.add(authLine, authServiceImgInstance);
                           </c:if>
 
 
@@ -324,6 +324,8 @@
 
                 </c:if>
 
+            </div>
+
         </section>
         <!-- /.content -->
     </div>
@@ -337,11 +339,16 @@
         reserved.
     </footer>
 
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+
+<script>
+  var useCaseCount = 2;
+
+  function widowHeight() {
+    return document.getElementById('architectureDiagram').clientHeight;
+  }
+</script>
 
 
 <!-- jQuery 3 -->
