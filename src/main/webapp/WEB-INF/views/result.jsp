@@ -35,7 +35,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" >
 <div class="wrapper">
 
     <header class="main-header">
@@ -144,10 +144,11 @@
 
                 <c:if test="${database.numOfDBs > 0 && frontend.numOfApps > 0}">
 
-                    <div class="col-md-6" id="architectureDiagram">
+                    <div id="architectureDiagram" style="overflow-y: scroll; height: 800px">
                         <canvas id="canvas" width="1200" height="800"></canvas>
                         <script>
                           var canvas = new fabric.Canvas('canvas');
+
                           var lines = [];
                           var groups = [];
 
@@ -163,12 +164,15 @@
 
                           var modelDBNames = [];
 
-                          var centerLineY = document.getElementById('architectureDiagram').clientHeight / 2;
+                          var clientHeight = document.getElementById('architectureDiagram').clientHeight;
+                          var centerLineY =  clientHeight / 2;
                           var parallalLineHeight = 150;
                           var parallalLineUpperCount = 0;
                           var parallalLineLowerCount = 0;
 
+                          console.log(`names.. ${database.nameOfDB}`);
                           <c:forEach items="${database.nameOfDB}" var="dbNames">
+                          // console.log(`names.. ${dbNames}`);
                           modelDBNames.push('${dbNames}');
                           </c:forEach>
 
@@ -226,15 +230,37 @@
 
 
                           // Branch elements created
-                          for (var i=0; i <${database.numOfDBs-1}; i++) {
-                            if ((i+1)%2 !== 0) {
-                              parallalLineUpperCount++;
+                          for (var index=0; index <${database.numOfDBs-1}; index++) {
+                            if ((index+1)%2 !== 0) {
+                              console.log('UPPER:: ', index+1);
+                              drawUpperDiagram(index);
+                            }
+                            else {
+                              // console.log('LOWER:: ', index+1);
+                              drawLowerDiagram(index);
+                            }
+
+                          }
+
+                          for (var i=0; i<lines.length; i++){
+                            canvas.add(lines[i]);
+                          }
+
+                          for (var i=0; i<groups.length; i++){
+                            canvas.add(groups[i]);
+                          }
+
+                          function drawUpperDiagram(index) {
+
+                            parallalLineUpperCount++;
+                            if (centerLineY-(parallalLineUpperCount*parallalLineHeight) > 50) {
+                              // console.log('UPER:: IFFFF', index+1);
                               //additional db line
                               lines.push(getLine([100, centerLineY-(parallalLineUpperCount*parallalLineHeight), 400, centerLineY-(parallalLineUpperCount*parallalLineHeight)]));
 
                               //additional db
                               dbCircles.push(getCircle());
-                              modelDBNames[i+1] !== '' ? dbTexts.push(getText(modelDBNames[i+1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
+                              modelDBNames[index+1] !== '' ? dbTexts.push(getText(modelDBNames[index+1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
                               groups.push(new fabric.Group([ dbCircles[dbCircles.length-1], dbTexts[dbTexts.length-1] ], {
                                 left: 100,
                                 top: centerLineY-(parallalLineUpperCount*parallalLineHeight)
@@ -250,40 +276,42 @@
                                 left: 400,
                                 top: centerLineY-(parallalLineUpperCount*parallalLineHeight)
                               }));
+                            } else {
+                              drawLowerDiagram(index);
                             }
-                            else {
-                              parallalLineLowerCount++;
-                              //additional db line
-                              lines.push(getLine([100, centerLineY+(parallalLineLowerCount*parallalLineHeight), 400, centerLineY+(parallalLineLowerCount*parallalLineHeight)]));
 
-                              //additional db
-                              dbCircles.push(getCircle());
-                              modelDBNames[i+1] !== '' ? dbTexts.push(getText(modelDBNames[i+1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
-                              groups.push(new fabric.Group([ dbCircles[dbCircles.length-1], dbTexts[dbTexts.length-1] ], {
-                                left: 100,
-                                top: centerLineY+(parallalLineLowerCount*parallalLineHeight)
-                              }));
 
-                              //additional ms line
-                              lines.push(getLine([400, centerLineY+(parallalLineUpperCount*parallalLineHeight), 700, centerLineY]));
-
-                              //additional ms
-                              msCircles.push(getCircle());
-                              msTexts.push(getText("Microservice-".concat((msCircles.length).toString())));
-                              groups.push(new fabric.Group([ msCircles[msCircles.length-1], msTexts[msTexts.length-1] ], {
-                                left: 400,
-                                top: centerLineY+(parallalLineUpperCount*parallalLineHeight)
-                              }));
-                            }
+                            // return true;
 
                           }
 
-                          for (var i=0; i<lines.length; i++){
-                            canvas.add(lines[i]);
-                          }
+                          function drawLowerDiagram(index) {
+                            console.log('LOWER:: ELSEEE ', index+1);
+                            parallalLineLowerCount++;
+                            //additional db line
+                            lines.push(getLine([100, centerLineY+(parallalLineLowerCount*parallalLineHeight), 400, centerLineY+(parallalLineLowerCount*parallalLineHeight)]));
 
-                          for (var i=0; i<groups.length; i++){
-                            canvas.add(groups[i]);
+                            //additional db
+                            dbCircles.push(getCircle());
+                            modelDBNames[index+1] !== '' ? dbTexts.push(getText(modelDBNames[index+1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
+                            groups.push(new fabric.Group([ dbCircles[dbCircles.length-1], dbTexts[dbTexts.length-1] ], {
+                              left: 100,
+                              top: centerLineY+(parallalLineLowerCount*parallalLineHeight)
+                            }));
+
+                            //additional ms line
+                            lines.push(getLine([400, centerLineY+(parallalLineLowerCount*parallalLineHeight), 700, centerLineY]));
+
+                            //additional ms
+                            msCircles.push(getCircle());
+                            msTexts.push(getText("Microservice-".concat((msCircles.length).toString())));
+                            groups.push(new fabric.Group([ msCircles[msCircles.length-1], msTexts[msTexts.length-1] ], {
+                              left: 400,
+                              top: centerLineY+(parallalLineLowerCount*parallalLineHeight)
+                            }));
+
+                            canvas.setHeight(centerLineY+(parallalLineLowerCount*parallalLineHeight) + 200);
+                            // return true;
                           }
 
                           function getLine(coords) {
@@ -342,13 +370,12 @@
 </div>
 <!-- ./wrapper -->
 
-<script>
-  var useCaseCount = 2;
-
-  function widowHeight() {
-    return document.getElementById('architectureDiagram').clientHeight;
-  }
-</script>
+<%--<script>--%>
+    <%--fabric.util.addListener(document.getElementById('architectureDiagram'), 'scroll', function () {--%>
+      <%--console.log('scroll');--%>
+      <%--canvas.calcOffset();--%>
+    <%--});--%>
+<%--</script>--%>
 
 
 <!-- jQuery 3 -->
