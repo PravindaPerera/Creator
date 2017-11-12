@@ -170,9 +170,7 @@
                           var parallalLineUpperCount = 0;
                           var parallalLineLowerCount = 0;
 
-                          console.log(`names.. ${database.nameOfDB}`);
                           <c:forEach items="${database.nameOfDB}" var="dbNames">
-                          // console.log(`names.. ${dbNames}`);
                           modelDBNames.push('${dbNames}');
                           </c:forEach>
 
@@ -185,8 +183,6 @@
 
                           dbCircles.push(getCircle());
                           modelDBNames[0] !== '' ? dbTexts.push(getText(modelDBNames[0])) : dbTexts.push(getText("Database-1"));
-                          //dbTexts.push(getText("Database-1"));
-                          <%--<c:out value="${empty database.nameOfDB.get(0) ? 'var1 is empty or null' : 'var1 is NOT empty or null'}" />--%>
 
                           msCircles.push(getCircle());
                           msTexts.push(getText("Microservice-1"));
@@ -232,11 +228,18 @@
                           // Branch elements created
                           for (var index=0; index <${database.numOfDBs-1}; index++) {
                             if ((index+1)%2 !== 0) {
-                              console.log('UPPER:: ', index+1);
-                              drawUpperDiagram(index);
+                              parallalLineUpperCount++;
+                              // logic to restrict drawing beyond the top boarder of the window diplay
+                              if (centerLineY-(parallalLineUpperCount*parallalLineHeight) > 50) {
+                                drawUpperDiagram(index);
+                              } else {
+                                // draw anything going beyond the top boarder in the window withing the lowe pane
+                                parallalLineLowerCount++;
+                                drawLowerDiagram(index);
+                              }
                             }
                             else {
-                              // console.log('LOWER:: ', index+1);
+                              parallalLineLowerCount++;
                               drawLowerDiagram(index);
                             }
 
@@ -251,10 +254,6 @@
                           }
 
                           function drawUpperDiagram(index) {
-
-                            parallalLineUpperCount++;
-                            if (centerLineY-(parallalLineUpperCount*parallalLineHeight) > 50) {
-                              // console.log('UPER:: IFFFF', index+1);
                               //additional db line
                               lines.push(getLine([100, centerLineY-(parallalLineUpperCount*parallalLineHeight), 400, centerLineY-(parallalLineUpperCount*parallalLineHeight)]));
 
@@ -276,18 +275,11 @@
                                 left: 400,
                                 top: centerLineY-(parallalLineUpperCount*parallalLineHeight)
                               }));
-                            } else {
-                              drawLowerDiagram(index);
-                            }
-
-
-                            // return true;
 
                           }
 
                           function drawLowerDiagram(index) {
-                            console.log('LOWER:: ELSEEE ', index+1);
-                            parallalLineLowerCount++;
+
                             //additional db line
                             lines.push(getLine([100, centerLineY+(parallalLineLowerCount*parallalLineHeight), 400, centerLineY+(parallalLineLowerCount*parallalLineHeight)]));
 
@@ -311,7 +303,6 @@
                             }));
 
                             canvas.setHeight(centerLineY+(parallalLineLowerCount*parallalLineHeight) + 200);
-                            // return true;
                           }
 
                           function getLine(coords) {
@@ -369,13 +360,6 @@
 
 </div>
 <!-- ./wrapper -->
-
-<%--<script>--%>
-    <%--fabric.util.addListener(document.getElementById('architectureDiagram'), 'scroll', function () {--%>
-      <%--console.log('scroll');--%>
-      <%--canvas.calcOffset();--%>
-    <%--});--%>
-<%--</script>--%>
 
 
 <!-- jQuery 3 -->
