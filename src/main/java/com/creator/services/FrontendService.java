@@ -17,6 +17,7 @@ public class FrontendService {
 
     // processing the user specified type of applications frontend
     public Frontend processFrontendDetails(String desktopApp, String mobileApp, String login) {
+        frontend.setNumOfApps(0);
         switch (desktopApp) {
             case "Web Application":
                 frontend.setDesktopWebApp(true);
