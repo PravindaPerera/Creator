@@ -152,7 +152,7 @@
                 </ul>
 
                 <!-- Tab panes -->
-                <form role="form" action="/process" method="POST">
+                <form role="form" action="/process/architecture" method="POST">
                     <div class="tab-content">
 
                         <div role="tabpanel" class="tab-pane fade in active" id="db">

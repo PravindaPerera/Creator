@@ -1,9 +1,13 @@
 package com.creator.controllers.processor;
 
+import com.creator.models.Backend;
 import com.creator.models.Database;
 import com.creator.models.Frontend;
+import com.creator.models.UseCase;
+import com.creator.services.BackendService;
 import com.creator.services.DatabaseService;
 import com.creator.services.FrontendService;
+import com.creator.services.UseCaseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +28,71 @@ public class processController {
     private FrontendService frontendService;
     @Autowired
     private DatabaseService databaseService;
+    @Autowired
+    private UseCaseService useCaseService;
+    @Autowired
+    private BackendService backendService;
 
     private Frontend frontend;
     private Database database;
+    private ArrayList<Backend> backendComponents = new ArrayList<Backend>();
+    private ArrayList<String> featureCategories = new ArrayList<>();
+    private ArrayList<UseCase> useCases = new ArrayList<UseCase>();
 
-    @RequestMapping(value = "/process", method = RequestMethod.POST)
+    @RequestMapping(value = "/process/featureCategories", method = RequestMethod.POST)
+    public String processFeatureCategories(ModelMap model, @RequestParam Map<String, String> params) {
+
+
+        for (int i=1; i<params.size(); i++) {
+            featureCategories.add(params.get("featureCategory"+i+""));
+        }
+        model.addAttribute("featureCategories", featureCategories);
+
+        return "page2";
+    }
+
+    @RequestMapping(value = "/process/useCases", method = RequestMethod.POST)
+    public String processFrontend(ModelMap model, @RequestParam Map<String, String> params) {
+
+        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<String> featureCategories = new ArrayList<String>();
+        ArrayList<Boolean> dbs = new ArrayList<Boolean>();
+        ArrayList<Boolean> apis = new ArrayList<Boolean>();
+        ArrayList<Boolean> fe1 = new ArrayList<Boolean>();
+        ArrayList<Boolean> fe2 = new ArrayList<Boolean>();
+
+        int index = 1;
+
+        while (params.get("useCaseName".concat(String.valueOf(index))) != null) {
+            names.add(params.get("useCaseName".concat(String.valueOf(index))));
+            featureCategories.add(params.get("featureCategory".concat(String.valueOf(index))));
+            dbs.add(params.get("useCaseDB".concat(String.valueOf(index))) != null);
+            apis.add(params.get("useCaseAPIs".concat(String.valueOf(index))) != null);
+            fe1.add(params.get("feDesktop".concat(String.valueOf(index))) != null);
+            fe2.add(params.get("feMobile".concat(String.valueOf(index))) != null);
+            index += 1;
+        }
+
+        useCases = useCaseService.processUseCases(names, featureCategories, dbs, apis, fe1, fe2);
+        frontend = this.getFrontendInformation(params);
+
+        backendComponents = backendService.processBackendComponents(useCases);
+
+        model.addAttribute("frontend", frontend);
+        model.addAttribute("backendComponents", backendComponents);
+        model.addAttribute("numOfFeatureCategories", backendComponents.size());
+
+//        for (int i=0; i< backendComponents.size(); i++) {
+//            System.out.println("FC...... " + backendComponents.get(i).getFeatureCategory());
+//            System.out.println("FE1...... " + backendComponents.get(i).getFE1());
+//            System.out.println("FE2..... " + backendComponents.get(i).getFE2());
+//            System.out.println("MS...... " + backendComponents.get(i).getMS());
+//        }
+
+        return "result";
+    }
+
+    @RequestMapping(value = "/process/architecture", method = RequestMethod.POST)
     public String process(ModelMap model, @RequestParam Map<String, String> params) {
 
         database = this.getDatabaseInformation(params);
@@ -39,6 +103,17 @@ public class processController {
         model.addAttribute("database", database);
 
         return "result";
+    }
+
+    @RequestMapping(value = "/process/services", method = RequestMethod.POST)
+    public String processServices(ModelMap model, @RequestParam Map<String, String> params) {
+
+        frontend = this.getFrontendInformation(params);
+
+
+        model.addAttribute("frontend", frontend);
+
+        return "home";
     }
 
     // get database information from the request params
@@ -63,9 +138,8 @@ public class processController {
 
         String desktopAppStatus = params.get("desktop");
         String mobileAppStatus = params.get("mobile");
-        String loginStatus = params.get("login");
 
-        return frontendService.processFrontendDetails(desktopAppStatus, mobileAppStatus, loginStatus);
+        return frontendService.processFrontendDetails(desktopAppStatus, mobileAppStatus);
 
     }
 }
