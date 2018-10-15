@@ -142,7 +142,7 @@
 
             <div>
 
-                <c:if test="${database.numOfDBs > 0 && frontend.numOfApps > 0}">
+                <c:if test="${numOfFeatureCategories > 0 && frontend.numOfApps > 0}">
 
                     <div id="architectureDiagram" style="overflow-y: scroll; height: 800px">
                         <canvas id="canvas" width="1200" height="800"></canvas>
@@ -163,6 +163,10 @@
                           var feTexts = [];
 
                           var modelDBNames = [];
+                          var modelMsNames = [];
+                          var fe1 = [];
+                          var fe2 = [];
+                          var tempDbComponentName = null;
 
                           var clientHeight = document.getElementById('architectureDiagram').clientHeight;
                           var centerLineY = clientHeight / 2;
@@ -170,8 +174,26 @@
                           var parallalLineUpperCount = 0;
                           var parallalLineLowerCount = 0;
 
-                          <c:forEach items="${database.nameOfDB}" var="dbNames">
-                          modelDBNames.push('${dbNames}');
+                          <c:forEach items="${backendComponents}" var="backendComponent">
+                          // construct ms names and db names
+                          modelMsNames.push('${backendComponent.featureCategory}' + ' MS');
+                          if (${backendComponent.db}) {
+                            if (${backendComponent.api}) {
+                              tempDbComponentName = '${backendComponent.featureCategory}' + ' DB / ' + 'API';
+                            } else {
+                              tempDbComponentName = '${backendComponent.featureCategory}' + ' DB';
+                            }
+                          } else if (${backendComponent.api}) {
+                            tempDbComponentName = '${backendComponent.featureCategory}' + ' API';
+                          } else {
+                            tempDbComponentName = '';
+                          }
+                          modelDBNames.push(tempDbComponentName);
+
+                          // detect fe statuses
+                          fe1.push(${backendComponent.FE1});
+                          fe2.push(${backendComponent.FE2});
+
                           </c:forEach>
 
                           fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
@@ -179,26 +201,37 @@
                           // Center line elements created
 
                           // line from db to ms
-                          lines.push(getLine([100, centerLineY, 400, centerLineY]));
+                          if (modelDBNames[0] !== '') {
+                            lines.push(getLine([100, centerLineY, 400, centerLineY]));
+                          }
 
                           // line from ms to bff and bff to app
+                          // TODO: line from ms to bff could be decided on ms deciding logic
                           if (${frontend.numOfApps == 1}) {
+                            // line from ms to bff
                             lines.push(getLine([400, centerLineY, 700, centerLineY]));
+                            // line from bff to app
                             lines.push(getLine([700, centerLineY, 1000, centerLineY]));
                           } else if (${frontend.numOfApps == 2}) {
-                            lines.push(getLine([400, centerLineY, 700, centerLineY - parallalLineHeight]));
-                            lines.push(getLine([400, centerLineY, 700, centerLineY + parallalLineHeight], 'green'));
+                            // line from ms to bff
+                            if (fe1[0]) {
+                              lines.push(getLine([400, centerLineY, 700, centerLineY - parallalLineHeight]));
+                            }
+                            if (fe2[0]) {
+                              lines.push(getLine([400, centerLineY, 700, centerLineY + parallalLineHeight], 'green'));
+                            }
 
+                            // line from bff to app
                             lines.push(getLine([700, centerLineY - parallalLineHeight, 1000, centerLineY]));
                             lines.push(getLine([700, centerLineY + parallalLineHeight, 1000, centerLineY], 'green'));
                           }
 
 
                           dbCircles.push(getCircle());
-                          modelDBNames[0] !== '' ? dbTexts.push(getText(modelDBNames[0])) : dbTexts.push(getText("Database-1"));
+                          dbTexts.push(getText(modelDBNames[0]));
 
                           msCircles.push(getCircle());
-                          msTexts.push(getText("Microservice-1"));
+                          msTexts.push(getText(modelMsNames[0]));
 
                           if (${frontend.desktopStandaloneApp}) {
                             addBFFText("Desktop Standalone App");
@@ -218,11 +251,14 @@
                           feCircles.push(getCircle());
                           feTexts.push(getText("FE"));
 
-                          groups.push(new fabric.Group([dbCircles[0], dbTexts[0]], {
-                            left: 100,
-                            top: centerLineY
-                          }));
+                          if (modelDBNames[0] !== '') {
+                            groups.push(new fabric.Group([dbCircles[0], dbTexts[0]], {
+                              left: 100,
+                              top: centerLineY
+                            }));
+                          }
 
+                          // TODO: drawing ms could be decided on ms deciding logic
                           groups.push(new fabric.Group([msCircles[0], msTexts[0]], {
                             left: 400,
                             top: centerLineY
@@ -246,7 +282,7 @@
 
 
                           // Branch elements created
-                          for (var index = 0; index <${database.numOfDBs-1}; index++) {
+                          for (var index = 0; index <${numOfFeatureCategories-1}; index++) {
                             if ((index + 1) % 2 !== 0) {
                               parallalLineUpperCount++;
                               // logic to restrict drawing beyond the top boarder of the window diplay
@@ -274,30 +310,36 @@
                           }
 
                           function drawUpperDiagram(index) {
-                            //additional db line
-                            lines.push(getLine([100, centerLineY - (parallalLineUpperCount * parallalLineHeight), 400, centerLineY - (parallalLineUpperCount * parallalLineHeight)]));
-
-                            //additional db
-                            dbCircles.push(getCircle());
-                            modelDBNames[index + 1] !== '' ? dbTexts.push(getText(modelDBNames[index + 1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
-                            groups.push(new fabric.Group([dbCircles[dbCircles.length - 1], dbTexts[dbTexts.length - 1]], {
-                              left: 100,
-                              top: centerLineY - (parallalLineUpperCount * parallalLineHeight)
-                            }));
+                            //additional db line and additional db
+                            if (modelDBNames[index + 1] !== '') {
+                              //additional db line
+                              lines.push(getLine([100, centerLineY - (parallalLineUpperCount * parallalLineHeight), 400, centerLineY - (parallalLineUpperCount * parallalLineHeight)]));
+                              //additional db
+                              dbCircles.push(getCircle());
+                              dbTexts.push(getText(modelDBNames[index + 1]));
+                              groups.push(new fabric.Group([dbCircles[dbCircles.length - 1], dbTexts[dbTexts.length - 1]], {
+                                left: 100,
+                                top: centerLineY - (parallalLineUpperCount * parallalLineHeight)
+                              }));
+                            }
 
 
                             if (${frontend.numOfApps == 1}) {
                               //additional ms line
                               lines.push(getLine([400, centerLineY - (parallalLineUpperCount * parallalLineHeight), 700, centerLineY]));
                             } else if (${frontend.numOfApps == 2}) {
-                              lines.push(getLine([400, centerLineY - (parallalLineUpperCount * parallalLineHeight), 700, centerLineY - parallalLineHeight]));
-                              lines.push(getLine([400, centerLineY - (parallalLineUpperCount * parallalLineHeight), 700, centerLineY + parallalLineHeight], 'green'));
+                              if (fe1[index+1]) {
+                                lines.push(getLine([400, centerLineY - (parallalLineUpperCount * parallalLineHeight), 700, centerLineY - parallalLineHeight]));
+                              }
+                              if (fe2[index+1]) {
+                                lines.push(getLine([400, centerLineY - (parallalLineUpperCount * parallalLineHeight), 700, centerLineY + parallalLineHeight], 'green'));
+                              }
                             }
 
 
                             //additional ms
                             msCircles.push(getCircle());
-                            msTexts.push(getText("Microservice-".concat((msCircles.length).toString())));
+                            msTexts.push(getText(modelMsNames[index + 1]));
                             groups.push(new fabric.Group([msCircles[msCircles.length - 1], msTexts[msTexts.length - 1]], {
                               left: 400,
                               top: centerLineY - (parallalLineUpperCount * parallalLineHeight)
@@ -307,28 +349,35 @@
 
                           function drawLowerDiagram(index) {
 
-                            //additional db line
-                            lines.push(getLine([100, centerLineY + (parallalLineLowerCount * parallalLineHeight), 400, centerLineY + (parallalLineLowerCount * parallalLineHeight)]));
+                            //additional db line and additional db
+                            if (modelDBNames[index + 1] !== '') {
+                              //additional db line
+                              lines.push(getLine([100, centerLineY + (parallalLineLowerCount * parallalLineHeight), 400, centerLineY + (parallalLineLowerCount * parallalLineHeight)]));
 
-                            //additional db
-                            dbCircles.push(getCircle());
-                            modelDBNames[index + 1] !== '' ? dbTexts.push(getText(modelDBNames[index + 1])) : dbTexts.push(getText("Database-".concat((dbCircles.length).toString())));
-                            groups.push(new fabric.Group([dbCircles[dbCircles.length - 1], dbTexts[dbTexts.length - 1]], {
-                              left: 100,
-                              top: centerLineY + (parallalLineLowerCount * parallalLineHeight)
-                            }));
+                              //additional db
+                              dbCircles.push(getCircle());
+                              dbTexts.push(getText(modelDBNames[index + 1]));
+                              groups.push(new fabric.Group([dbCircles[dbCircles.length - 1], dbTexts[dbTexts.length - 1]], {
+                                left: 100,
+                                top: centerLineY + (parallalLineLowerCount * parallalLineHeight)
+                              }));
+                            }
 
                             if (${frontend.numOfApps == 1}) {
                               //additional ms line
                               lines.push(getLine([400, centerLineY + (parallalLineLowerCount * parallalLineHeight), 700, centerLineY]));
                             } else if (${frontend.numOfApps == 2}) {
-                              lines.push(getLine([400, centerLineY + (parallalLineLowerCount * parallalLineHeight), 700, centerLineY - parallalLineHeight]));
-                              lines.push(getLine([400, centerLineY + (parallalLineLowerCount * parallalLineHeight), 700, centerLineY + parallalLineHeight], 'green'));
+                              if (fe1[index+1]) {
+                                lines.push(getLine([400, centerLineY + (parallalLineLowerCount * parallalLineHeight), 700, centerLineY - parallalLineHeight]));
+                              }
+                              if (fe2[index+1]) {
+                                lines.push(getLine([400, centerLineY + (parallalLineLowerCount * parallalLineHeight), 700, centerLineY + parallalLineHeight], 'green'));
+                              }
                             }
 
                             //additional ms
                             msCircles.push(getCircle());
-                            msTexts.push(getText("Microservice-".concat((msCircles.length).toString())));
+                            msTexts.push(getText(modelMsNames[index + 1]));
                             groups.push(new fabric.Group([msCircles[msCircles.length - 1], msTexts[msTexts.length - 1]], {
                               left: 400,
                               top: centerLineY + (parallalLineLowerCount * parallalLineHeight)
