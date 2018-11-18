@@ -9,6 +9,7 @@ import com.creator.services.DatabaseService;
 import com.creator.services.FrontendService;
 import com.creator.services.UseCaseService;
 
+import com.mongodb.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -38,6 +41,9 @@ public class processController {
     private ArrayList<Backend> backendComponents = new ArrayList<Backend>();
     private ArrayList<String> featureCategories = new ArrayList<>();
     private ArrayList<UseCase> useCases = new ArrayList<UseCase>();
+
+    final String DATABASE_NAME = "Test111";
+    final String DOCUMENT_NAME = "cRecords";
 
     @RequestMapping(value = "/process/featureCategories", method = RequestMethod.POST)
     public String processFeatureCategories(ModelMap model, @RequestParam Map<String, String> params) {
@@ -77,6 +83,13 @@ public class processController {
         frontend = this.getFrontendInformation(params);
 
         backendComponents = backendService.processBackendComponents(useCases);
+
+        // call the KB and retrieve domain specific data set
+        // If no domain specific data set then - system generated paths will not be modified
+        // If KB contains a rule set modify the system generated paths against the KB rules
+        // @TODO how to take the weights from the architect?
+        // Calculate the metric based average score
+        // and return
 
         model.addAttribute("frontend", frontend);
         model.addAttribute("backendComponents", backendComponents);
@@ -142,4 +155,87 @@ public class processController {
         return frontendService.processFrontendDetails(desktopAppStatus, mobileAppStatus);
 
     }
+
+    // Add a new controller method to handle architects changes
+    // Within it do the required changes
+    // Calculate the metric score with modifications
+    // See whether it is better than the system generated
+    // If so update the KB and return the result
+
+//    // Save details to database
+//    private void saveToDatabase() {
+//
+//        // String roomIdValue;
+//        int numberOfAssets;
+//        double gfaValue = 2.09;
+//        ArrayList<String> assetNames = new ArrayList<>();
+//        ArrayList<Double> assetValues = new ArrayList<>();
+//
+//        assetNames.add("asset 1");
+//        assetNames.add("asset 2");
+//
+//        assetValues.add(2.39);
+//        assetValues.add(4.39);
+//
+//        try {
+//
+//            // Connect to MongoDB
+//            MongoClient mongo = new MongoClient("localhost", 27017);
+//
+//            // Get db
+//            DB db = mongo.getDB(DATABASE_NAME);
+//
+//            // Get specified table from specified db
+//            DBCollection table = db.getCollection(DOCUMENT_NAME);
+//
+//            // Insert db record
+//            // create a document to store key and value
+//            BasicDBObject document = new BasicDBObject();
+//            document.put("_id", "Type");
+//            document.put("roomId", "1111");
+//            document.put("numberOfAssets", 2);
+//            document.put("gfaValue", gfaValue);
+//            document.put("assetNames", assetNames);
+//            document.put("assetValues", assetValues);
+//            document.put("createdDate", new Date());
+//            table.insert(document);
+//
+//
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
+//    // get details from database
+//    private void getFromDatabase() {
+//        try {
+//            // Connect to MongoDB
+//            MongoClient mongo = new MongoClient("localhost", 27017);
+//
+//            // Get db
+//            DB db = mongo.getDB(DATABASE_NAME);
+//
+//            // Get specified table from specified db
+//            DBCollection table = db.getCollection(DOCUMENT_NAME);
+//
+//            // get room details from db
+//            BasicDBObject searchQuery = new BasicDBObject();
+//            searchQuery.put("_id", 20);
+//
+//            DBCursor cursor = table.find(searchQuery);
+//
+//            System.out.println("COUNT!!!!! " + cursor.count());
+//
+//            while (cursor.hasNext()) {
+//                DBObject obj = cursor.next();
+////                retreivedGFAValue = (Double) obj.get("gfaValue");
+////                retreivedAssetNames = (ArrayList<Object>) obj.get("assetNames");
+////                retreivedAssetValues = (ArrayList<Object>) obj.get("assetValues");
+//            }
+//
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
